@@ -2,3 +2,4 @@ BankOCR/.vs/
 *.user
 .vs/
 bin/
+build/
