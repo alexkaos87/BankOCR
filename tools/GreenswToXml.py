@@ -41,23 +41,24 @@ class Error:
 def detectErrors(fileName):
     errors = []
 
+    rowDelimeter = "+--------"
     tableState = TableState(1)
     reader = open(fileName, 'r')
     for line in reader:
-        if "+---------+-------------------------+------+---------------------------+" in line and tableState is TableState(1):
+        if rowDelimeter in line and tableState is TableState(1):
             tableState = TableState(2)
         
         if "code" in line and tableState is TableState(2):
             tableState = TableState(3)
 
-        if "+---------+-------------------------+------+---------------------------+" in line and tableState is TableState(3):
+        if rowDelimeter in line and tableState is TableState(3):
             tableState = TableState(4)
 
         if "|" in line and (tableState is TableState(4) or tableState is TableState(5)):
             tableState = TableState(5)
             errors.append(Error.create(line))
 
-        if not "|" in line and not "+---------+-------------------------+------+---------------------------+" in line and tableState is TableState(5):
+        if not "|" in line and not rowDelimeter in line and tableState is TableState(5):
             tableState = TableState(1)
 
     return errors
