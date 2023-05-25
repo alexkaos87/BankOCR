@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(OCRTest, readsValidInput) {
+TEST(OCRTest, readsValidInput1) {
 	OCR ocr;
 	std::string input = 
 		"    _  _     _  _  _  _  _ "
@@ -12,6 +12,18 @@ TEST(OCRTest, readsValidInput) {
 	auto ret=ocr.read(input);
 
 	EXPECT_EQ(std::vector<int>({ 1,2,3,4,5,6,7,8,9 }), ret);
+}
+
+TEST(OCRTest, readsValidInput2) {
+	OCR ocr;
+	std::string input = 
+		"    _  _  _  _  _     _  _ "
+		"  || | _||_||_ |_   ||_ |_|"
+		"  ||_||_   ||_| _|  ||_||_|"
+		"                           ";
+	auto ret=ocr.read(input);
+
+	EXPECT_EQ(std::vector<int>({ 1,0,2,9,6,5,1,6,8 }), ret);
 }
 
 TEST(OCRTest, checkChecksum) {
